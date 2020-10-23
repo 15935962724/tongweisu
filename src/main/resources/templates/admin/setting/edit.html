@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>添加管理员</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+  <meta content="Coderthemes" name="author" />
+  <!-- App favicon -->
+  <link rel="shortcut icon"  th:href="@{/assets/images/favicon.ico}" >
+  <!-- App css -->
+  <link href="assets/css/icons.min.css" th:href="@{/assets/css/icons.min.css}"  rel="stylesheet" type="text/css" />
+  <link href="assets/css/app.min.css" th:href="@{/assets/css/app.min.css}"  rel="stylesheet" type="text/css" />
+  <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
+</head>
+<body>
+
+<!-- Topbar Start -->
+<div th:replace="~{admin/incloud/top::top}"></div>
+<!-- end Topbar -->
+
+
+<div class="container-fluid">
+  <!-- Begin page -->
+  <div class="wrapper">
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div th:replace="~{admin/incloud/left::left}"></div>
+    <!-- Left Sidebar End -->
+
+    <div class="content-page">
+      <div class="content">
+
+        <div class="row">
+          <div class="col-lg-6" style="margin: 0 auto;">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="header-title mb-3">短信设置</h4>
+
+                <form class="needs-validation" novalidate  method="post" th:action="@{/admin/setting/update}">
+
+                  <div class="form-group mb-3">
+                    <label for="shortMessageUrl">短信接口（API 地址）</label>
+                    <input type="text" class="form-control" id="shortMessageUrl" name="shortMessageUrl"  th:value="${setting.shortMessageUrl}" placeholder="shortMessageUrl" required>
+                    <div class="invalid-feedback">
+                      短信接口必填
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="accountSid">开发者主账号（ACCOUNT SID），开发者账号唯一标识符</label>
+                    <input type="text" class="form-control" id="accountSid" name="accountSid" th:value="${setting.accountSid}" placeholder="accountSid" required>
+                    <div class="invalid-feedback">
+                      请输入开发者主账号
+                    </div>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="accountId">子账户ID</label>
+                    <input type="text" class="form-control" id="accountId" name="accountId" th:value="${setting.accountId}" placeholder="accountId">
+                    <div class="invalid-feedback">
+                      子账户id
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="authToken">秘钥（AUTH TOKEN）</label>
+                    <input type="text" class="form-control" id="authToken" name="authToken" th:value="${setting.authToken}" placeholder="authToken" required>
+                    <div class="invalid-feedback">
+                      请输入秘钥
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="phone">测试</label><br/>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" value="15935962724" style="width:85%; display:inline; ">
+                    <button type="button" class="btn btn-danger btn-primary" >测试</button>
+                  </div>
+
+                  <div class="button-list" style="text-align: center">
+                    <button type="submit" class="btn btn-primary btn-success">确定</button>
+                    <button type="button" class="btn btn-primary">返回</button>
+                  </div>
+                </form>
+              </div> <!-- end card-body-->
+            </div> <!-- end card-->
+          </div> <!-- end col-->
+        </div>
+        <!-- end row -->
+      </div>
+      <!-- Footer Start -->
+      <div th:replace="~{admin/incloud/footer::footer}"></div>
+      <!-- end Footer -->
+    </div> <!-- content-page -->
+  </div> <!-- end wrapper-->
+</div>
+<!-- END Container -->
+<div class="rightbar-overlay"></div>
+<!-- /Right-bar -->
+<!-- App js -->
+<script src="assets/js/app.min.js" th:src="@{/assets/js/app.min.js}"></script>
+</body>
+
+</html>
