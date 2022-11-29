@@ -75,9 +75,6 @@ public class MainController {
 		model.addAttribute("startDate",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(new Date(ManagementFactory.getRuntimeMXBean().getStartTime())));
 
-		System.err.println("程序启动时间:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(new Date(ManagementFactory.getRuntimeMXBean().getStartTime())));
-
 		Runtime run = Runtime.getRuntime();
 		long max = run.maxMemory();
 		long total = run.totalMemory();

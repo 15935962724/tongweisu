@@ -4,6 +4,8 @@ package com.tongweisu.service.impl;
 import com.tongweisu.dao.TWS_AdminMapper;
 import com.tongweisu.entity.TWS_Admin;
 import com.tongweisu.service.AdminService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public TWS_Admin getAdmin(Map query_map) {
 		return adminMapper.getAdmin(query_map);
+	}
+
+	@Override
+	public TWS_Admin getCurrent() {
+		Subject subject = SecurityUtils.getSubject();
+		if (subject != null) {
+			TWS_Admin admin = (TWS_Admin) SecurityUtils.getSubject().getPrincipal();
+			if (admin!=null){
+				return admin;
+			}
+		}
+		return null;
 	}
 
 	@Override

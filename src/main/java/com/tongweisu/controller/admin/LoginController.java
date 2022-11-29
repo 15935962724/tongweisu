@@ -58,7 +58,7 @@ public class LoginController {
 			String params = null;
 			Subject subject = SecurityUtils.getSubject();
 			String sessionCode = (String) subject.getSession().getAttribute("strEnsure");
-			if (!code.equals(sessionCode)){
+			if (!code.toUpperCase().equals(sessionCode)){
 				map.put("msg"	,"验证码输入有误");
 				return  "admin/index";
 			}
@@ -110,6 +110,7 @@ public class LoginController {
 	@RequestMapping(value = "/lognout")
 	public String lognout() {
 		Subject subject = SecurityUtils.getSubject();
+		subject.getSession().removeAttribute("adminRedirectUrl");
 		subject.logout();
 		return "admin/index";
 	}

@@ -20,5 +20,7 @@ public interface AdminService {
 
 	TWS_Admin getAdmin(Map query_map);
 
+	TWS_Admin getCurrent();
+
 	
 }

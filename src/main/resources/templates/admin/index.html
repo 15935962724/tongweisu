@@ -38,7 +38,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe613;</i></label>
                 <div class="formControls col-xs-8">
-                    <input class="input-text size-L" type="text" name="code" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="" style="width:150px;">
+                    <input class="input-text size-L" type="text" name="code" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="" style="width:150px;text-transform:uppercase">
                     <img src="" id = "code" th:src="@{/getCodeImage}">
                     <a id="kanbuq" href="javascript:;" onclick="getCode()">看不清，换一张</a>
                 </div>
@@ -61,7 +61,7 @@
     </div>
 </div>
 <div class="footer">Copyright 中国同位素上海有限公司 </div>
-<script th:src="@{/admin/lib/ueditor/1.4.3/third-party/jquery-1.10.2.js}"></script>
+<script th:src="@{/admin/lib/ueditor/third-party/jquery-1.10.2.js}"></script>
 <script >
     function getCode() {
         var x = 100;

@@ -1,0 +1,180 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="Bookmark" href="favicon.ico" >
+  <link rel="Shortcut Icon" href="favicon.ico" />
+  <link rel="stylesheet" type="text/css" th:href="@{/admin/static/h-ui/css/H-ui.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/admin/static/h-ui.admin/css/H-ui.admin.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/admin/lib/Hui-iconfont/1.0.8/iconfont.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/admin/static/h-ui.admin/skin/default/skin.css}" id="skin" />
+  <link rel="stylesheet" type="text/css" th:href="@{/admin/static/h-ui.admin/css/style.css}" />
+
+  <!--/meta 作为公共模版分离出去-->
+
+  <title>新闻列表 - 新闻管理</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+</head>
+<body>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="~{admin/incloud/js::jquery}"></div>
+<!--/_footer /作为公共模版分离出去-->
+
+<!--_header 作为公共模版分离出去-->
+<div th:include="~{admin/incloud/top::top}"></div>
+<!--/_header 作为公共模版分离出去-->
+
+<!--_menu 作为公共模版分离出去-->
+<div th:include="~{admin/incloud/left::left}"></div>
+<!--/_menu 作为公共模版分离出去-->
+
+<section class="Hui-article-box">
+  <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span>
+    资讯管理
+    <span class="c-gray en">&gt;</span>
+    资讯列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+  </nav>
+  <div class="Hui-article">
+    <article class="cl pd-20">
+      <div class="text-c">
+        <form id="list" th:action="@{/admin/article/list}" >
+                <input type="hidden" id="pageNum" name="pageNum" th:value="${page.pageNum}" />
+                <input type="hidden" id="pageSize" name="pageSize" th:value="${page.pageSize}" />
+				<span class="select-box inline">
+				<select name="type" onchange="$('#list').submit();" class="select">
+					<option value="">全部分类</option>
+					<option th:selected="${type==1}" value="1">最新动态</option>
+					<option th:selected="${type==2}" value="2">业界资讯</option>
+				</select>
+				</span>
+        日期范围：
+        <input type="text" name="startDate" th:value="${startDate}" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
+        -
+        <input type="text" name="endDate" th:value="${endDate}" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;">
+        <input type="text" name="title" th:value="${title}" placeholder=" 资讯名称" style="width:250px" class="input-text">
+        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+        </form>
+      </div>
+      <div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l">
+				<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+				<a class="btn btn-primary radius" data-title="添加资讯" _href="article-add.html"  th:href="@{/admin/article/add}" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a>
+				</span>
+        <span class="r">共有数据：<strong>[[${page.total}]]</strong> 条</span>
+      </div>
+
+      <div class="mt-20">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+          <table class="table table-border table-bordered table-bg table-hover table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row">
+              <th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input
+                      type="checkbox" name="" value=""></th>
+              <th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                  colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="标题: 升序排列" style="width: 760px;">标题
+              </th>
+              <th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="来源: 升序排列" style="width: 80px;">来源
+              </th>
+              <th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="分类: 升序排列" style="width: 80px;">分类
+              </th>
+              <th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="作者: 升序排列" style="width: 80px;">作者
+              </th>
+              <th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="排序: 升序排列" style="width: 80px;">排序
+              </th>
+              <th width="120" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="更新时间: 升序排列" style="width: 120px;">发布时间
+              </th>
+              <th width="75" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                  aria-label="浏览次数: 升序排列" style="width: 75px;">浏览次数
+              </th>
+              <th width="120" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 120px;">
+                操作
+              </th>
+            </tr>
+            </thead>
+          <tbody>
+            <tr class="text-c odd" role="row" th:each="article ,articleStart :${page.list}">
+              <td><input type="checkbox" value="" name="id"></td>
+              <td class="sorting_1">[[${articleStart.index+1}]]</td>
+              <td ><u style="cursor:pointer" class="text-primary" onclick="article_edit('查看','article-zhang.html','10002')" title="查看">[[${article.title}]]</u></td>
+              <td>[[${article.source}]]</td>
+              <td>
+                <th:block th:if="${article.type == 1}">
+                    最新动态
+                </th:block>
+                <th:block th:if="${article.type == 2}">
+                    业界资讯
+                </th:block>
+              </td>
+              <td>[[${article.author}]]</td>
+              <td>[[${article.orders}]]</td>
+              <td>[[${#dates.format(article.createDate,'yyyy-MM-dd HH:mm:ss')}]]</td>
+              <td>[[${article.hits}]]</td>
+              <td class="f-14 td-manage">
+                <a style="text-decoration:none" class="ml-5"  th:href="@{/admin/article/edit(id=${article.id})}" title="编辑"><i class="Hui-iconfont"></i></a>
+                <a style="text-decoration:none" class="ml-5" th:onclick="'javascript:article_del(this,\''+${article.id}+'\')'"  href="javascript:;" title="删除"><i class="Hui-iconfont"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+
+          <div th:replace="~{admin/incloud/page::page}"></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{/admin/lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+<script type="text/javascript" th:src="@{/admin/lib/datatables/1.10.15/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/admin/lib/laypage/1.2/laypage.js}"></script>
+
+<script type="text/javascript">
+  /*资讯-删除*/
+  function article_del(obj,id){
+    layer.confirm('确认要删除吗？',function(index){
+      $.ajax({
+        type: 'POST',
+        url:'[[@{/admin/article/delete}]]',
+        data:{id:id},
+        dataType: 'json',
+        success: function(data){
+          if (data){
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000},function () {
+              location.reload();
+            });
+          } else {
+            layer.msg('删除失败!',{icon:1,time:1000});
+          }
+
+        },
+        error:function(data) {
+          console.log(data.msg);
+        },
+      });
+    });
+  }
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
